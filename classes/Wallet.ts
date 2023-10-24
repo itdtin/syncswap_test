@@ -10,19 +10,19 @@ import {
   PayableOverrides,
 } from "ethers";
 import { ethers } from "ethers";
+import { Config } from "./Config";
 
-export class Wallet {
-  private provider: providers.JsonRpcProvider;
+export class Wallet extends Config {
   private signers: Signer[];
   public defaultSigner: Signer;
 
-  constructor(provider: providers.JsonRpcProvider, filepath: string) {
-    this.provider = provider;
+  constructor() {
+    super();
     this.signers = fs
-      .readFileSync(filepath, { encoding: "utf8" })
+      .readFileSync(this.commonConfig.walletsFilepath, { encoding: "utf8" })
       .split("\n")
       .filter((pk) => pk)
-      .map((pk) => new ethers.Wallet(pk, provider));
+      .map((pk) => new ethers.Wallet(pk, this.provider));
     this.defaultSigner = this.signer(0);
   }
 
@@ -33,7 +33,6 @@ export class Wallet {
     args: any[],
     overrides?: PayableOverrides
   ): Promise<ContractReceipt | string | undefined> {
-    // TODO: console tx hash
     try {
       if (overrides) {
         args = args.concat(overrides);
@@ -42,10 +41,10 @@ export class Wallet {
         .connect(this.provider)
         .connect(signer)
         [methodName](...args);
-      console.log("tx", tx);
       console.log(`${methodName} method is executed on ${contract.address}`);
+      console.log(`Transaction hash ${tx.hash}`);
       try {
-        return await tx.wait(1);
+        return await tx.wait(2);
       } catch (e) {
         return tx;
       }
