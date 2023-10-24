@@ -6,7 +6,7 @@ import {
 } from "../utils/utils";
 import PoolFactoryAbi from "../abis/PoolFactory.abi.json";
 import RouterAbi from "../abis/SyncSwapRouter.abi.json";
-import TokenAbi from "../abis/Token.abi.json";
+import TokenAbi from "../abis/ERC20Permit.json";
 
 import { Wallet } from "./Wallet";
 import {

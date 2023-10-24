@@ -1,4 +1,4 @@
-import { BigNumber, Contract, ethers, Signature, providers } from "ethers";
+import { BigNumber, Contract, Signature, providers } from "ethers";
 import { splitSignature } from "ethers/lib/utils";
 
 export async function getPermitSignature(
