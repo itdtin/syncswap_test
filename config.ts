@@ -6,10 +6,8 @@ import { INetworkConfig } from "./interfaces/INetworkConfig";
 
 export const config: IConfig = {
   walletsFilepath: path.resolve("wallets.txt"),
-  contractAddress: "string",
   token1Address: "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
   token2Address: "0x493257fD37EDB34451f62EDf8D2a0C418852bA4C",
-  calculateViaToken: 1, // calculate amount of tokens to add liquidity by token1 or token2
   percentOfBalance: 90,
   withdrawLiquidity: false,
 };

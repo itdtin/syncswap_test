@@ -7,6 +7,7 @@ import {
   Signer,
   ContractReceipt,
   BigNumber,
+  PayableOverrides,
 } from "ethers";
 import { ethers } from "ethers";
 
@@ -30,7 +31,7 @@ export class Wallet {
     contract: Contract,
     methodName: string,
     args: any[],
-    overrides?: Overrides
+    overrides?: PayableOverrides
   ): Promise<ContractReceipt | string | undefined> {
     // TODO: console tx hash
     try {
@@ -41,6 +42,7 @@ export class Wallet {
         .connect(this.provider)
         .connect(signer)
         [methodName](...args);
+      console.log("tx", tx);
       console.log(`${methodName} method is executed on ${contract.address}`);
       try {
         return await tx.wait(1);
