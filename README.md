@@ -7,6 +7,7 @@ To use that You need have installed NodeJs and follow the instructions below.
 1. Run `npm install`
 2. Create new wallets.txt file with private key and put it into the root of the project directory.
 3. Follow the instructions below to set up
+4. After config.js is configured, you can run script by `npx ts-node run.ts`
 
 ## Configuration File (config.js) Overview
 At the root of your project, you will find the config.js file, which plays a crucial role in customizing the behavior of the script. This configuration file allows you to fine-tune various parameters to suit your specific needs. Here's an explanation of the fields and options available:
