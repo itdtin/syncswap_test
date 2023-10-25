@@ -30,7 +30,6 @@ export async function waitChangeTokenBalance(
   let balanceAfter = balanceBefore;
   while (balanceAfter <= balanceBefore) {
     const waitNow = Math.random() * (20 - 5) + 5;
-    console.log(waitNow);
     sleep(waitNow);
     balanceAfter = await tokenContract.balanceOf(address);
     waited += waitNow;

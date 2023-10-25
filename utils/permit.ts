@@ -1,8 +1,8 @@
-import { BigNumber, Contract, Signature, providers } from "ethers";
+import { BigNumber, Contract, Signature, Wallet } from "ethers";
 import { splitSignature } from "ethers/lib/utils";
 
 export async function getPermitSignature(
-  wallet: providers.JsonRpcSigner,
+  wallet: Wallet,
   token: Contract,
   approve: {
     owner: string;
@@ -38,7 +38,7 @@ export async function getPermitSignature(
 }
 
 export async function getSplittedPermitSignature(
-  wallet: providers.JsonRpcSigner,
+  wallet: Wallet,
   token: Contract,
   approve: {
     owner: string;

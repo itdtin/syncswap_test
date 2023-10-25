@@ -1,11 +1,13 @@
 import { BigNumber } from "ethers";
 import { ITokenInput } from "./ITokenInput";
+import { IPermit } from "./IPermit";
 
-export interface IAddLiquidity {
+export interface IRemoveLiquidity {
   poolAddress: string;
-  tokenInputs: ITokenInput[];
+  liquidity: BigNumber;
   bytesDataTo: string;
-  minLp: BigNumber;
+  minAmounts: BigNumber[];
   callback: string;
   callbackData: string;
+  permit?: IPermit;
 }

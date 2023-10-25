@@ -1,11 +1,9 @@
-import { ethers, providers } from "ethers";
-import { config, networkConfig } from "../config";
-import { IConfig } from "../interfaces/IConfig";
+import { providers } from "ethers";
+import { network } from "../config";
 import { INetworkConfig } from "../interfaces/INetworkConfig";
 
-export class Config {
-  commonConfig: IConfig = config;
-  networkConfig: INetworkConfig = networkConfig;
+export class NetworkConfig {
+  networkConfig: INetworkConfig = network;
   provider: providers.JsonRpcProvider;
 
   constructor() {

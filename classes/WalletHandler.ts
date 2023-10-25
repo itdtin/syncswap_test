@@ -2,32 +2,31 @@ import * as fs from "fs";
 
 import {
   Contract,
-  Overrides,
-  providers,
-  Signer,
+  Wallet,
   ContractReceipt,
   BigNumber,
   PayableOverrides,
 } from "ethers";
 import { ethers } from "ethers";
-import { Config } from "./Config";
+import { walletsFilePath } from "../config";
+import { NetworkConfig } from "./Config";
 
-export class Wallet extends Config {
-  private signers: Signer[];
-  public defaultSigner: Signer;
+export class WalletHandler extends NetworkConfig {
+  private wallets: Wallet[];
+  public defaultWallet: Wallet;
 
   constructor() {
     super();
-    this.signers = fs
-      .readFileSync(this.commonConfig.walletsFilepath, { encoding: "utf8" })
+    this.wallets = fs
+      .readFileSync(walletsFilePath, { encoding: "utf8" })
       .split("\n")
       .filter((pk) => pk)
       .map((pk) => new ethers.Wallet(pk, this.provider));
-    this.defaultSigner = this.signer(0);
+    this.defaultWallet = this.wallet(0);
   }
 
   async sendContractTx(
-    signer: Signer,
+    signer: Wallet,
     contract: Contract,
     methodName: string,
     args: any[],
@@ -41,20 +40,17 @@ export class Wallet extends Config {
         .connect(this.provider)
         .connect(signer)
         [methodName](...args);
-      console.log(`${methodName} method is executed on ${contract.address}`);
-      console.log(`Transaction hash ${tx.hash}`);
-      try {
-        return await tx.wait(2);
-      } catch (e) {
-        return tx;
-      }
+      console.log(
+        `${methodName} method is executed on ${contract.address}, tx hash ${tx.hash}`
+      );
+      return await tx.wait(2);
     } catch (e) {
       console.error(e);
     }
   }
 
-  signer(index: number): Signer {
-    return this.signers[index];
+  wallet(index: number): Wallet {
+    return this.wallets[index];
   }
 
   async balance(account: string): Promise<BigNumber> {
